@@ -10,7 +10,7 @@ Japan Food Facilities は、自治体・都道府県・厚生労働省が公開�
 集め、共通の列に揃えて配布しています。
 
 データ全体に1つのライセンスがあるのではなく、取得元ごとにライセンスが違います。各行の `source` 列が
-取得元、`license` 列がそのライセンス、`license_id` 列が Queria のライセンス ID です。取得元ごとの
+取得元、`license` 列がそのライセンス、`license_id` 列がライセンス ID です（版の表記が無い CC BY は `CC-BY`）。取得元ごとの
 出典表示は [Japan Food Facilities の出典・ライセンス表示](https://food.japan-facilities.com/attribution.html)
 にあります。
 

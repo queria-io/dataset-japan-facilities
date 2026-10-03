@@ -54,7 +54,7 @@ sources:
 contributors:
   - title: Japan Food Facilities
     path: https://food.japan-facilities.com/
-    roles: [rightsHolder]
+    roles: [publisher]
 
 spatial_coverage: [JP]
 update_frequency: weekly
