@@ -6,19 +6,18 @@ Japan Food Facilities は自治体・都道府県・厚生労働省が公開す�
 
 取得元ごとの振り分け（厚生労働省 食品衛生申請等システム由来とそれ以外）は dbt 側で行う。
 
-出力: data/food/facilities-all.csv と data/food/fetch.json
+出力: data/food/facilities-all.csv
 
 データソース: Japan Food Facilities
 https://food.japan-facilities.com/
 """
 
-import json
 import logging
 import shutil
 import time
-from datetime import UTC, datetime
+from http.client import HTTPException
 from pathlib import Path
-from urllib.error import HTTPError, URLError
+from urllib.error import HTTPError
 from urllib.request import Request, urlopen
 
 logger = logging.getLogger("pipelines")
@@ -41,7 +40,9 @@ def download_csv(url: str, output: Path) -> int:
                 shutil.copyfileobj(response, fh, length=1 << 20)
             partial.replace(output)
             return output.stat().st_size
-        except (HTTPError, URLError, TimeoutError) as error:
+        # 本文を読んでいる途中の切断（ConnectionResetError / IncompleteRead）も取り直す。
+        # HTTPError / URLError / TimeoutError は OSError の下にある
+        except (OSError, HTTPException) as error:
             if isinstance(error, HTTPError) and error.code < 500:
                 raise
             if attempt == MAX_RETRIES:
@@ -57,14 +58,3 @@ def download_food() -> None:
     size = download_csv(CSV_URL, output)
     logger.info("facilities-all.csv: %.1f MB", size / 1e6)
 
-    (OUTPUT_DIR / "fetch.json").write_text(
-        json.dumps(
-            {
-                "url": CSV_URL,
-                "bytes": size,
-                "fetched_at": datetime.now(UTC).isoformat(timespec="seconds"),
-            },
-            ensure_ascii=False,
-        )
-        + "\n"
-    )
