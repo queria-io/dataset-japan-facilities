@@ -1,0 +1,38 @@
+version: 2
+
+models:
+- name: permit
+  description: 自治体・都道府県が公開した食品営業許可・届出。1行が許可・届出1件。
+  access: public
+  columns:
+  - name: source
+    data_tests:
+    - not_null
+  - name: license_id
+    data_tests:
+    - not_null
+    - accepted_values:
+        arguments:
+          values:
+          - CC-BY-4.0
+          - CC-BY-3.0
+          - CC-BY-2.1-JP
+          - CC-BY-2.0
+          - CC-BY
+          - CC0-1.0
+          - JP-PDL-1.0
+
+- name: permit_i2fas
+  description: 厚生労働省 食品衛生申請等システム由来の食品営業許可・届出。1行が許可・届出1件。
+  access: public
+  columns:
+  - name: source
+    data_tests:
+    - not_null
+  - name: license_id
+    data_tests:
+    - not_null
+    - accepted_values:
+        arguments:
+          values:
+          - JP-PDL-1.0

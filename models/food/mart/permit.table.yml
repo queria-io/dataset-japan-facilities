@@ -1,0 +1,70 @@
+_fields: &fields
+- name: prefecture
+  title: 都道府県
+  description: 施設の所在地の都道府県。特定できなかった行は「不明」
+- name: city
+  title: 市区町村
+  description: Japan Food Facilities が正規化した市区町村名。政令指定都市の区は市にまとめ、郡名は外してある。特定できなかった行は「不明」
+- name: city_raw
+  title: 市区町村（元の表記）
+- name: name
+  title: 施設名
+- name: name_kana
+  title: 施設名カナ
+- name: business_type
+  title: 業種
+  description: 営業許可・届出の業種（飲食店営業・菓子製造業など）。取得元によって付いている「① 」のような番号を外してある
+- name: business_type_raw
+  title: 業種（元の表記）
+- name: address
+  title: 所在地
+- name: lat
+  title: 緯度
+  description: 元データの座標か、Japan Food Facilities が住所から付与した座標。精度は geocoding_level を見る。日本の範囲外の値は NULL にしてある
+- name: lon
+  title: 経度
+- name: geocoding_level
+  title: ジオコーディングの精度
+  description: 住所から座標を付与したときの正規化レベル。3 は町字の代表点、8 は番地以下まで。lat が入っていて geocoding_level が NULL の行は、元データの座標をそのまま使っている。lat が NULL の行は座標が無い
+- name: phone
+  title: 電話番号
+- name: license_no
+  title: 許可番号
+- name: license_date
+  title: 許可日
+- name: expire_date
+  title: 有効期限
+  description: 許可の有効期限。過ぎていても行は残っている
+- name: source
+  title: 取得元
+  description: Japan Food Facilities がこの行を取得した公開元のデータセット名
+- name: license
+  title: ライセンス（元の表記）
+- name: license_id
+  title: ライセンス
+  description: license 列をライセンス ID に揃えたもの。CC-BY は取得元が版を書いていない CC BY
+- name: geometry
+  title: ジオメトリ
+  description: lat / lon から作った POINT。座標が無い行は NULL
+
+tables:
+- schema: food
+  name: permit
+  title: 食品営業許可・届出（自治体公開分）
+  description: 自治体・都道府県が公開した食品営業許可・届出の施設一覧。1行が許可・届出1件。取得元は78あり、それぞれのライセンスは license_id 列に入っている。厚生労働省 食品衛生申請等システム由来の行は permit_i2fas にある。
+  keywords: [食品営業許可, 飲食店, 施設, GIS]
+  published: true
+  sources:
+  - path: https://food.japan-facilities.com/attribution.html
+  fields: *fields
+
+- schema: food
+  name: permit_i2fas
+  title: 食品営業許可・届出（食品衛生申請等システム）
+  description: 厚生労働省 食品衛生申請等システムのオープンデータに由来する食品営業許可・届出。1行が許可・届出1件。掲載に賛同した事業者の施設だけが含まれる。自前で施設一覧を公開していない自治体の区域は、このテーブルにしか無い。出典は「食品衛生申請等システム」（厚生労働省）（https://i2fas.mhlw.go.jp/faspub/IO_S010303.do）を Japan Food Facilities と Queria が加工して作成。
+  keywords: [食品営業許可, 飲食店, 施設, 厚生労働省, GIS]
+  published: true
+  licenses: [JP-PDL-1.0]
+  sources:
+  - path: https://i2fas.mhlw.go.jp/faspub/IO_S010303.do
+  fields: *fields

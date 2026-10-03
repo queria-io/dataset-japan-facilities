@@ -1,0 +1,11 @@
+version: 2
+
+models:
+- name: raw_permit
+  description: Japan Food Facilities の全件 CSV のうち、厚生労働省 食品衛生申請等システム由来を除いた行。全列 VARCHAR。
+  data_tests:
+  - not_empty
+- name: raw_permit_i2fas
+  description: Japan Food Facilities の全件 CSV のうち、厚生労働省 食品衛生申請等システム由来の行。全列 VARCHAR。
+  data_tests:
+  - not_empty

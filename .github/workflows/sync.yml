@@ -1,0 +1,22 @@
+name: Sync
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - "*.md"
+  schedule:
+    # 毎週火曜 06:00 JST。Japan Food Facilities は毎週火曜 03:00 JST に更新される
+    - cron: "0 21 * * 1"
+  workflow_dispatch:
+
+concurrency:
+  group: sync
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    uses: queria-io/dataset-shared/.github/workflows/sync.yml@main
+    with:
+      dataset_name: japan_facilities
+    secrets: inherit
