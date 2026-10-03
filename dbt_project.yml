@@ -1,0 +1,33 @@
+name: "japan_facilities"
+version: "1.0.0"
+
+profile: "japan_facilities"
+
+model-paths: ["models"]
+analysis-paths: ["analyses"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros", "shared/macros"]
+snapshot-paths: ["snapshots"]
+
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+vars:
+  # false にすると食品衛生申請等システム由来の raw_permit_i2fas / permit_i2fas を
+  # 作らず、公開中のカタログからも落とす。手順は README の「取り下げ」
+  publish_i2fas: true
+
+on-run-start:
+  - "{{ drop_withdrawn_i2fas() }}"
+
+models:
+  japan_facilities:
+    +database: japan_facilities
+    food:
+      # raw だけ実体化し、mart は view にして二重に持たない
+      raw:
+        +materialized: table
+      mart:
+        +materialized: view
