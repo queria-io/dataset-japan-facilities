@@ -4,8 +4,8 @@
    pull してから始まるので、落とさないと前回までの raw_permit_i2fas と permit_i2fas が
    そのまま公開され続ける。
 
-   raw はテーブル、mart はビューで、DROP TABLE / DROP VIEW は IF EXISTS を付けても
-   型が違うとエラーになる。カタログに実際どちらで載っているかを引いてから落とす。
+   DROP TABLE / DROP VIEW は IF EXISTS を付けても型が違うとエラーになるので、
+   カタログに実際どちらで載っているかを引いてから落とす。
    引き先が duckdb_tables() / duckdb_views() なのは、DuckLake の information_schema が
    カタログを跨いでは見えないため。
 

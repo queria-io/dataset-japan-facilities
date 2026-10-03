@@ -26,8 +26,9 @@ models:
   japan_facilities:
     +database: japan_facilities
     food:
-      # raw だけ実体化し、mart は view にして二重に持たない
       raw:
         +materialized: table
+      # mart も実体化する。view だと st_point が読むたびに評価され、spatial 拡張を
+      # 読み込んでいないブラウザの DuckDB からは統計も SQL も通らない
       mart:
-        +materialized: view
+        +materialized: table
