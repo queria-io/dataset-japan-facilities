@@ -30,8 +30,10 @@ _fields: &fields
   title: 電話番号
 - name: license_no
   title: 許可番号
+  description: 取得元によっては空
 - name: license_date
   title: 許可日
+  description: 半数を超える取得元で全行が空（行の多いものでは大阪市、東京都渋谷区、東京都の台帳、神戸市、鹿児島県）。値があるのは全体の4割ほどの行
 - name: expire_date
   title: 有効期限
   description: 許可の有効期限。過ぎていても行は残っている
@@ -51,7 +53,7 @@ tables:
 - schema: food
   name: permit
   title: 食品営業許可・届出（自治体公開分）
-  description: 自治体・都道府県が公開した食品営業許可・届出の施設一覧。1行が許可・届出1件。取得元は78あり、それぞれのライセンスは license_id 列に入っている。厚生労働省 食品衛生申請等システム由来の行は permit_i2fas にある。
+  description: 自治体・都道府県が公開した食品営業許可・届出の施設一覧。1行が許可・届出1件。取得元ごとのライセンスは license_id 列に入っている。厚生労働省 食品衛生申請等システム由来の行は permit_i2fas にある。取得元ごとに収録の範囲が違う。source が「東京都（保健医療局）食品関係営業許可台帳」の行は許可だけで届出を含まず、許可番号・許可日・有効期限も空になっている。都の台帳を届出まで含めて使うなら metro_tokyo.hokenjo.food_establishment を使う。許可日は半数を超える取得元で全行が空で、値があるのは全体の4割ほどの行だけなので、許可日で絞ると多くの行が落ちる。千葉・岡山・高知・和歌山・茨城・宮城・島根の各県は、このテーブルに行が無く、permit_i2fas にだけ行がある。
   keywords: [食品営業許可, 飲食店, 施設, GIS]
   published: true
   sources:
