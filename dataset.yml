@@ -18,6 +18,7 @@ keywords:
   - GIS
 homepage: https://github.com/queria-io/dataset-japan-facilities
 language: ja
+themes: [commerce_services]
 
 licenses:
   - CC-BY-4.0
