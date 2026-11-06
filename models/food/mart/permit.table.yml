@@ -4,7 +4,7 @@ _fields: &fields
   description: 施設の所在地の都道府県。特定できなかった行は「不明」
 - name: city
   title: 市区町村
-  description: Japan Food Facilities が正規化した市区町村名。政令指定都市の区は市にまとめ、郡名は外してある。特定できなかった行は「不明」
+  description: 正規化した市区町村名。政令指定都市の区は市にまとめている
 - name: city_raw
   title: 市区町村（元の表記）
 - name: name
@@ -13,27 +13,27 @@ _fields: &fields
   title: 施設名カナ
 - name: business_type
   title: 業種
-  description: 営業許可・届出の業種（飲食店営業・菓子製造業など）。取得元によって付いている「① 」のような番号を外してある
+  description: 飲食店営業・菓子製造業など。「① 」のような番号を外している
 - name: business_type_raw
   title: 業種（元の表記）
 - name: address
   title: 所在地
 - name: lat
   title: 緯度
-  description: 元データの座標か、Japan Food Facilities が住所から付与した座標。精度は geocoding_level を見る。日本の範囲外の値は NULL にしてある
+  description: 元データか住所から付与した座標。精度は geocoding_level
 - name: lon
   title: 経度
 - name: geocoding_level
   title: ジオコーディングの精度
-  description: 住所から座標を付与したときの正規化レベル。3 は町字の代表点、8 は番地以下まで。lat が入っていて geocoding_level が NULL の行は、元データの座標をそのまま使っている。lat が NULL の行は座標が無い
+  description: 3 は町字の代表点、8 は番地以下。NULL は元データの座標
 - name: phone
   title: 電話番号
 - name: license_no
   title: 許可番号
-  description: 空の行がある。permit では一部の取得元で全行が空、permit_i2fas では4割強の行が空
+  description: 空の行がある。取得元によっては全行が空
 - name: license_date
   title: 許可日
-  description: 空の行が多い。値があるのは permit で4割弱、permit_i2fas で半分強の行
+  description: 空の行が多い
 - name: expire_date
   title: 有効期限
   description: 許可の有効期限。過ぎていても行は残っている
@@ -44,7 +44,7 @@ _fields: &fields
   title: ライセンス（元の表記）
 - name: license_id
   title: ライセンス
-  description: license 列をライセンス ID に揃えたもの。CC-BY は取得元が版を書いていない CC BY
+  description: license をライセンス ID に統一したもの。CC-BY は版の表記なし
 - name: geometry
   title: ジオメトリ
   description: lat / lon から作った POINT。座標が無い行は NULL
@@ -53,7 +53,12 @@ tables:
 - schema: food
   name: permit
   title: 食品営業許可・届出（自治体公開分）
-  description: 自治体・都道府県が公開した食品営業許可・届出の施設一覧。1行が許可・届出1件。取得元ごとのライセンスは license_id 列に入っている。厚生労働省 食品衛生申請等システム由来の行は permit_i2fas にある。取得元ごとに収録の範囲が違う。source が「東京都（保健医療局）食品関係営業許可台帳」の行は許可だけで届出を含まず、許可番号・許可日・有効期限も空になっている。都の台帳を届出や許可日まで含めて使うなら metro_tokyo.hokenjo.food_establishment を使う。許可日は半数を超える取得元で全行が空で、行の多いものは大阪市、東京都渋谷区、東京都の台帳、神戸市、鹿児島県。値があるのは全体の4割弱の行だけなので、許可日で絞ると多くの行が落ちる。千葉・岡山・高知・和歌山・茨城・宮城・島根の各県は、このテーブルに行が無く、permit_i2fas にだけ行がある。新潟・佐賀・宮崎の各県も、このテーブルには他県の取得元に入っている数十行以下しか無く、県内の行は permit_i2fas にある。
+  description: |-
+    自治体・都道府県が公開した食品営業許可・届出の施設一覧です。1 行が許可・届出 1 件です。
+
+    - 取得元ごとに収録範囲とライセンス（`license_id`）が違います。許可日が入っているのは 4 割弱の行です
+    - 千葉県など 7 県は行が無く、`permit_i2fas` にだけあります。全国を見るときは 2 つのテーブルを `UNION ALL` してください
+    - 廃業した施設や許可期限の切れた施設も残っています
   keywords: [食品営業許可, 飲食店, 施設, GIS]
   published: true
   sources:
@@ -63,7 +68,11 @@ tables:
 - schema: food
   name: permit_i2fas
   title: 食品営業許可・届出（食品衛生申請等システム）
-  description: 厚生労働省 食品衛生申請等システムのオープンデータに由来する食品営業許可・届出。1行が許可・届出1件。掲載に賛同した事業者の施設だけが含まれる。自前で施設一覧を公開していない自治体の区域は、このテーブルにしか無い。出典は「食品衛生申請等システム」（厚生労働省）（https://i2fas.mhlw.go.jp/faspub/IO_S010303.do）を Japan Food Facilities と Queria が加工して作成。
+  description: |-
+    厚生労働省 食品衛生申請等システムのオープンデータに由来する食品営業許可・届出です。1 行が許可・届出 1 件です。
+
+    - 掲載に賛同した事業者の施設だけが含まれます
+    - 自前で施設一覧を公開していない自治体の区域は、このテーブルにしかありません
   keywords: [食品営業許可, 飲食店, 施設, 厚生労働省, GIS]
   published: true
   licenses: [JP-PDL-1.0]
