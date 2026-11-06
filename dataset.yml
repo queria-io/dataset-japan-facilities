@@ -2,13 +2,9 @@ spec_version: "0.1"
 name: japan_facilities
 title: Japan Food Facilities
 description: |-
-  全国の食品営業許可・届出の施設一覧（飲食店・喫茶店・菓子製造業・食肉販売業など約136万件）。Japan Food Facilities が自治体・都道府県・厚生労働省のオープンデータを集めて共通の列に揃えたものを、毎週取り直して収録する。
-  1行が許可・届出1件で、同じ施設が複数の業種で許可を持つと複数行になる。廃業した施設や許可期限の切れた施設も残っている。緯度経度の多くは Japan Food Facilities が住所から付与した参考値で、各自治体が提供したものではない。
-  厚生労働省 食品衛生申請等システム由来の行は permit_i2fas、それ以外は permit に分けて収録する。
+  全国の食品営業許可・届出の施設一覧（飲食店・菓子製造業・食肉販売業など約 136 万件）です。Japan Food Facilities が自治体と厚生労働省のオープンデータを共通の列に統一したもので、毎週取得し直します。
 
-  出典: Japan Food Facilities（各自治体・厚生労働省が公開する食品営業許可オープンデータを加工して作成）https://food.japan-facilities.com/attribution.html
-  取得元ごとの出典とライセンスは同ページに一覧がある。各行の source 列が取得元、license 列がその取得元のライセンスを示す。
-  Queria が Japan Food Facilities の全件 CSV を取得元によって2つのテーブルに分け、業種名の番号の除去、ライセンス表記の正規化、日本の範囲外の座標の除去、ジオメトリの付与を行って作成した。
+  出典：Japan Food Facilities（各自治体・厚生労働省の食品営業許可のオープンデータを加工）。取得元ごとのライセンスは各行の license_id 列にあります。Queria が加工したものです。
 keywords:
   - 食品営業許可
   - 飲食店
