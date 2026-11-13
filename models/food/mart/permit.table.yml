@@ -1,4 +1,20 @@
-_fields: &fields
+schema: food
+name: permit
+title: 食品営業許可・届出（自治体公開分）
+description: |-
+  自治体・都道府県が公開した食品営業許可・届出の施設一覧です。1 行が許可・届出 1 件です。
+
+  - 取得元ごとに収録範囲とライセンス（`license_id`）が違います。許可日が入っているのは 4 割弱の行です
+  - 千葉県など 7 県は行が無く、`permit_i2fas` にだけあります。全国を見るときは 2 つのテーブルを `UNION ALL` してください
+  - 廃業した施設や許可期限の切れた施設も残っています
+keywords:
+- 食品営業許可
+- 飲食店
+- 施設
+- GIS
+sources:
+- path: https://food.japan-facilities.com/attribution.html
+fields:
 - name: prefecture
   title: 都道府県
   description: 施設の所在地の都道府県。特定できなかった行は「不明」
@@ -48,34 +64,3 @@ _fields: &fields
 - name: geometry
   title: ジオメトリ
   description: lat / lon から作った POINT。座標が無い行は NULL
-
-tables:
-- schema: food
-  name: permit
-  title: 食品営業許可・届出（自治体公開分）
-  description: |-
-    自治体・都道府県が公開した食品営業許可・届出の施設一覧です。1 行が許可・届出 1 件です。
-
-    - 取得元ごとに収録範囲とライセンス（`license_id`）が違います。許可日が入っているのは 4 割弱の行です
-    - 千葉県など 7 県は行が無く、`permit_i2fas` にだけあります。全国を見るときは 2 つのテーブルを `UNION ALL` してください
-    - 廃業した施設や許可期限の切れた施設も残っています
-  keywords: [食品営業許可, 飲食店, 施設, GIS]
-  published: true
-  sources:
-  - path: https://food.japan-facilities.com/attribution.html
-  fields: *fields
-
-- schema: food
-  name: permit_i2fas
-  title: 食品営業許可・届出（食品衛生申請等システム）
-  description: |-
-    厚生労働省 食品衛生申請等システムのオープンデータに由来する食品営業許可・届出です。1 行が許可・届出 1 件です。
-
-    - 掲載に賛同した事業者の施設だけが含まれます
-    - 自前で施設一覧を公開していない自治体の区域は、このテーブルにしかありません
-  keywords: [食品営業許可, 飲食店, 施設, 厚生労働省, GIS]
-  published: true
-  licenses: [JP-PDL-1.0]
-  sources:
-  - path: https://i2fas.mhlw.go.jp/faspub/IO_S010303.do
-  fields: *fields

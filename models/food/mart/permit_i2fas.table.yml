@@ -1,0 +1,68 @@
+schema: food
+name: permit_i2fas
+title: 食品営業許可・届出（食品衛生申請等システム）
+description: |-
+  厚生労働省 食品衛生申請等システムのオープンデータに由来する食品営業許可・届出です。1 行が許可・届出 1 件です。
+
+  - 掲載に賛同した事業者の施設だけが含まれます
+  - 自前で施設一覧を公開していない自治体の区域は、このテーブルにしかありません
+keywords:
+- 食品営業許可
+- 飲食店
+- 施設
+- 厚生労働省
+- GIS
+licenses:
+- JP-PDL-1.0
+sources:
+- path: https://i2fas.mhlw.go.jp/faspub/IO_S010303.do
+fields:
+- name: prefecture
+  title: 都道府県
+  description: 施設の所在地の都道府県。特定できなかった行は「不明」
+- name: city
+  title: 市区町村
+  description: 正規化した市区町村名。政令指定都市の区は市にまとめている
+- name: city_raw
+  title: 市区町村（元の表記）
+- name: name
+  title: 施設名
+- name: name_kana
+  title: 施設名カナ
+- name: business_type
+  title: 業種
+  description: 飲食店営業・菓子製造業など。「① 」のような番号を外している
+- name: business_type_raw
+  title: 業種（元の表記）
+- name: address
+  title: 所在地
+- name: lat
+  title: 緯度
+  description: 元データか住所から付与した座標。精度は geocoding_level
+- name: lon
+  title: 経度
+- name: geocoding_level
+  title: ジオコーディングの精度
+  description: 3 は町字の代表点、8 は番地以下。NULL は元データの座標
+- name: phone
+  title: 電話番号
+- name: license_no
+  title: 許可番号
+  description: 空の行がある。取得元によっては全行が空
+- name: license_date
+  title: 許可日
+  description: 空の行が多い
+- name: expire_date
+  title: 有効期限
+  description: 許可の有効期限。過ぎていても行は残っている
+- name: source
+  title: 取得元
+  description: Japan Food Facilities がこの行を取得した公開元のデータセット名
+- name: license
+  title: ライセンス（元の表記）
+- name: license_id
+  title: ライセンス
+  description: license をライセンス ID に統一したもの。CC-BY は版の表記なし
+- name: geometry
+  title: ジオメトリ
+  description: lat / lon から作った POINT。座標が無い行は NULL

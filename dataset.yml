@@ -1,4 +1,6 @@
-spec_version: "0.1"
+# この dataset.yml は fdl commit が読む（FDL の dataset.json を YAML で書いたもの）。
+# 表の説明は models/ の *.table.yml に書く。表と列の型・NULL・行数は fdl commit がカタログから埋める。
+# Queria だけの項目（テーマ・カバー・AI 向けの説明・列の意味）は annotations.queria に書く。
 name: japan_facilities
 title: Japan Food Facilities
 description: |-
@@ -14,7 +16,6 @@ keywords:
   - GIS
 homepage: https://github.com/queria-io/dataset-japan-facilities
 language: ja
-themes: [commerce_services]
 
 licenses:
   - CC-BY-4.0
@@ -55,8 +56,11 @@ contributors:
 
 spatial_coverage: [JP]
 update_frequency: weekly
-cover: 🍽️
 
 schemas:
   - name: food
     title: 食品営業許可・届出
+annotations:
+  queria:
+    themes: [commerce_services]
+    cover: 🍽️
