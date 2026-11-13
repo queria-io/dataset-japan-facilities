@@ -7,6 +7,7 @@
 [Japan Food Facilities](https://food.japan-facilities.com/) が配布している全件 CSV を毎週取得し直しています。Japan Food Facilities は、自治体・都道府県・厚生労働省が公開する食品営業許可・届出のオープンデータを集め、共通の列に統一して配布しています。
 
 - データ全体に 1 つのライセンスがあるのではなく、取得元ごとにライセンスが違います。各行の `source` 列が取得元、`license` 列がそのライセンス、`license_id` 列がライセンス ID です（版の表記が無い CC BY は `CC-BY`）
+- Japan Food Facilities の提供条件では、商用・非商用を問わず、アプリ・Web サービス・分析・再配布に利用できます。取得元のライセンスはすべて CC BY・公共データ利用規約・CC0 で、非商用に限るものはありません
 - 取得元ごとの出典表示は [Japan Food Facilities の出典・ライセンス表示](https://food.japan-facilities.com/attribution.html)にあります。使うときは、使った取得元の出典と、Japan Food Facilities と Queria が加工したものであることを書いてください
 - `permit_i2fas` の出典は「[食品衛生申請等システム](https://i2fas.mhlw.go.jp/faspub/IO_S010303.do)」（厚生労働省）です
 - Queria は、全件 CSV を取得元によって 2 つのテーブルに分け、業種名の番号の除去、ライセンス表記の正規化、日本の範囲外の座標の除去、ジオメトリの付与を行っています
