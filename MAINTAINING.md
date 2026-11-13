@@ -14,14 +14,11 @@
 2. 1 の Sync が終わったら、過去のスナップショットとそのデータファイルを消す。手元で
 
    ```bash
-   export QUERIA_TOKEN="$(op read op://Development/queria-token/QUERIA_TOKEN)"
-   uv run queria pull --handle queria
-   uv run queria expire --retention-days 0
-   uv run queria push
+   uvx --from fdl-cli fdl checkout https://data.queria.io/datasets/queria/japan_facilities/ .fdl/work.sqlite
+   # DuckDB で CALL ducklake_expire_snapshots('lake', older_than => now()) を実行してから
+   FDL_TOKEN="$(op read op://Development/queria-token/QUERIA_TOKEN)" uvx --from fdl-cli fdl commit .fdl/work.sqlite -m "Expire old snapshots" --allow-empty
+   FDL_TOKEN="$(op read op://Development/queria-token/QUERIA_TOKEN)" uvx --from fdl-cli fdl push .fdl/work.sqlite
    ```
-
-   2 をやらなくても、毎週の Checkpoint が7日より古いスナップショットを消すので、2週間以内には
-   履歴からも消えます。2 は消えるまでの期間を縮めるための手順です。
 
 1 の Sync が終わる前に 2 を流すと、公開中のカタログが参照するファイルを消して読めない時間ができます。
 順番を入れ替えないでください。
