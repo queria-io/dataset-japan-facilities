@@ -8,8 +8,9 @@
 
 `permit_i2fas` は、これだけを公開カタログから外せるように別のテーブルにしてあります。
 
-1. `dbt_project.yml` の `publish_i2fas` を `false` にし、`models/food/mart/permit.table.yml` から
-   `permit_i2fas` の項目を消して main に入れる。Sync のビルドが冒頭で `raw_permit_i2fas` と
+1. `dbt_project.yml` の `publish_i2fas` を `false` にし、`models/food/mart/permit_i2fas.tabledoc.yml` と
+   `models/food/raw/raw_permit_i2fas.tabledoc.yml` を消して main に入れる（無効にしたモデルの説明が残ると
+   tabledoc load が止まる）。Sync のビルドが冒頭で `raw_permit_i2fas` と
    `permit_i2fas` をカタログから落とし（`macros/drop_withdrawn_i2fas.sql`）、落とした状態で公開する
 2. 1 の Sync が終わったら、過去のスナップショットとそのデータファイルを消す。手元で
 

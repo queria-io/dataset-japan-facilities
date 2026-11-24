@@ -1,0 +1,65 @@
+$schema: https://tabledoc.queria.io/schemas/table/v1.json
+title: 食品営業許可・届出（自治体公開分）
+description: |-
+  自治体・都道府県が公開した食品営業許可・届出の施設一覧です。1 行が許可・届出 1 件です。
+
+  - 取得元ごとに収録範囲とライセンス（`license_id`）が違います。許可日が入っているのは 4 割弱の行です
+  - 千葉県など 7 県は行が無く、`permit_i2fas` にだけあります。全国を見るときは 2 つのテーブルを `UNION ALL` してください
+  - 廃業した施設や許可期限の切れた施設も残っています
+topics:
+  - 食品営業許可
+  - 飲食店
+  - 施設
+  - GIS
+sources:
+  - attribution
+columns:
+  - name: prefecture
+    title: 都道府県
+    description: 施設の所在地の都道府県。特定できなかった行は「不明」
+  - name: city
+    title: 市区町村
+    description: 正規化した市区町村名。政令指定都市の区は市にまとめている
+  - name: city_raw
+    title: 市区町村（元の表記）
+  - name: name
+    title: 施設名
+  - name: name_kana
+    title: 施設名カナ
+  - name: business_type
+    title: 業種
+    description: 飲食店営業・菓子製造業など。「① 」のような番号を外している
+  - name: business_type_raw
+    title: 業種（元の表記）
+  - name: address
+    title: 所在地
+  - name: lat
+    title: 緯度
+    description: 元データか住所から付与した座標。精度は geocoding_level
+  - name: lon
+    title: 経度
+  - name: geocoding_level
+    title: ジオコーディングの精度
+    description: 3 は町字の代表点、8 は番地以下。NULL は元データの座標
+  - name: phone
+    title: 電話番号
+  - name: license_no
+    title: 許可番号
+    description: 空の行がある。取得元によっては全行が空
+  - name: license_date
+    title: 許可日
+    description: 空の行が多い
+  - name: expire_date
+    title: 有効期限
+    description: 許可の有効期限。過ぎていても行は残っている
+  - name: source
+    title: 取得元
+    description: Japan Food Facilities がこの行を取得した公開元のデータセット名
+  - name: license
+    title: ライセンス（元の表記）
+  - name: license_id
+    title: ライセンス
+    description: license をライセンス ID に統一したもの。CC-BY は版の表記なし
+  - name: geometry
+    title: ジオメトリ
+    description: lat / lon から作った POINT。座標が無い行は NULL

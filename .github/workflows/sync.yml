@@ -3,8 +3,6 @@ name: Sync
 on:
   push:
     branches: [main]
-    paths-ignore:
-      - "*.md"
   schedule:
     # 毎週火曜 06:00 JST。Japan Food Facilities は毎週火曜 03:00 JST に更新される
     - cron: "0 21 * * 1"
@@ -20,7 +18,7 @@ jobs:
     permissions:
       contents: read
       id-token: write
-    uses: queria-io/dataset-shared/.github/workflows/sync.yml@dc0e5caa95da02a5303726dca8df5dec26c94322
+    uses: queria-io/dataset-shared/.github/workflows/sync.yml@main
     with:
       dataset_name: japan_facilities
     secrets:
