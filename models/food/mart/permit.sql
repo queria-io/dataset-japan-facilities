@@ -1,1 +1,1 @@
-{{ jff_permit(ref('raw_permit')) }}
+{{ jff_permit(ref('stg_permit')) }}
