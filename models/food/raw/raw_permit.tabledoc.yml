@@ -1,0 +1,3 @@
+$schema: https://tabledoc.queria.io/schemas/table/v1.json
+description: Japan Food Facilities の全件 CSV のうち、厚生労働省 食品衛生申請等システム由来を除いた行。全列 VARCHAR。
+hidden: true

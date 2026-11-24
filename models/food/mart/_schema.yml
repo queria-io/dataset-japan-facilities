@@ -2,7 +2,6 @@ version: 2
 
 models:
 - name: permit
-  description: 自治体・都道府県が公開した食品営業許可・届出。1行が許可・届出1件。
   access: public
   columns:
   - name: source
@@ -23,7 +22,6 @@ models:
           - JP-PDL-1.0
 
 - name: permit_i2fas
-  description: 厚生労働省 食品衛生申請等システム由来の食品営業許可・届出。1行が許可・届出1件。
   access: public
   columns:
   - name: source

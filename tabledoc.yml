@@ -1,0 +1,50 @@
+$schema: https://tabledoc.queria.io/schemas/dataset/v1.json
+name: japan_facilities
+title: Japan Food Facilities
+description: |-
+  全国の食品営業許可・届出の施設一覧（飲食店・菓子製造業・食肉販売業など約 136 万件）です。Japan Food Facilities が自治体と厚生労働省のオープンデータを共通の列に統一したもので、毎週取得し直します。
+
+  出典：Japan Food Facilities（各自治体・厚生労働省の食品営業許可のオープンデータを加工）。取得元ごとのライセンスは各行の license_id 列にあります。Queria が加工したものです。
+image: cover.png
+topics:
+  - 食品営業許可
+  - 飲食店
+  - 施設
+  - POI
+  - 保健所
+  - GIS
+language: ja
+licenses:
+  - CC-BY-4.0
+  - CC-BY-2.1-JP
+  - JP-PDL-1.0
+  - CC0-1.0
+  - CC-BY-3.0
+  - CC-BY-2.0
+  - id: CC-BY
+    url: http://www.opendefinition.org/licenses/cc-by
+    title: Creative Commons Attribution（版の表記なし）
+    commercial_use: true
+    share_alike: false
+    attribution_required: true
+sources:
+  - id: food
+    title: Japan Food Facilities
+    url: https://food.japan-facilities.com/
+  - id: attribution
+    title: Japan Food Facilities 出典・ライセンス表示
+    url: https://food.japan-facilities.com/attribution.html
+  - id: IO_S010303
+    url: https://i2fas.mhlw.go.jp/faspub/IO_S010303.do
+contributors:
+  - id: food
+    title: Japan Food Facilities
+    url: https://food.japan-facilities.com/
+    roles:
+      - publisher
+spatial_coverage:
+  - JP
+update_frequency: weekly
+schemas:
+  - name: food
+    title: 食品営業許可・届出
